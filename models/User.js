@@ -25,6 +25,10 @@ const userSchema = mongoose.Schema({
   tokenExp: {
     type: Number,
   },
+  age: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const User = mongoose.model("User", userSchema);
