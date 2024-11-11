@@ -1,0 +1,21 @@
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div>
+      <h1>Login</h1>
+      <form action="/auth/login" method="POST">
+        <input type="text" name="name" placeholder="ID" required />
+        <input type="password" name="password" placeholder="PW" required />
+        <button type="submit">Login</button>
+      </form>
+      <p>Sign up? <a href="/signup.html">Sign UP</a></p>
+      <a href="/index.html">TO-DO LIST</a>
+      <!-- 임시로 확인용 링크 -->
+    </div>
+  </body>
+</html>

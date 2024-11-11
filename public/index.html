@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo list</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div>
+      <a href="/login.html">로그인</a>
+      <h1>Todo 리스트</h1>
+      <div class="input-container">
+        <input type="text" id="todo-input" placeholder="To do..?" />
+        <button id="add-btn">추가</button>
+      </div>
+      <ul id="todo-list"></ul>
+    </div>
+
+    <script>
+      async function fetchTodos() {
+        const res = await fetch("/todo");
+        const { todos } = await res.json();
+        document.getElementById("todo-list").innerHTML = "";
+        todos.forEach((todo) => {
+          const li = document.createElement("li");
+          li.innerHTML = `
+            <span>${todo.text}</span>
+            <button onclick="editTodo('${todo._id}')">Edit</button>
+            <button onclick="deleteTodo('${todo._id}')">Delete</button>
+          `;
+          document.getElementById("todo-list").appendChild(li);
+        });
+      }
+
+      document.getElementById("add-btn").addEventListener("click", async () => {
+        const todoText = document.getElementById("todo-input").value.trim();
+        if (todoText) {
+          await fetch("/todo/add", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text: todoText }),
+          });
+          fetchTodos();
+          document.getElementById("todo-input").value = "";
+        }
+      });
+
+      async function editTodo(id) {
+        const newText = prompt("Edit your todo:");
+        if (newText) {
+          await fetch(`/todo/edit/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text: newText }),
+          });
+          fetchTodos();
+        }
+      }
+
+      async function deleteTodo(id) {
+        await fetch(`/todo/delete/${id}`, { method: "DELETE" });
+        fetchTodos();
+      }
+
+      window.onload = fetchTodos;
+    </script>
+  </body>
+</html>
