@@ -4,24 +4,15 @@ const path = require('path');
 const app = express();
 const PORT = 3000;
 
-// 간단한 사용자 데이터 예시
-const users = [];
+const users = []; // 사용자 데이터를 저장할 배열
 
 // 미들웨어 설정
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public'))); // static 파일 경로 설정
+app.use(express.static(path.join(__dirname, 'public'))); // public 폴더를 정적 파일 경로로 설정
 
 // 라우트 설정
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-app.get('/login.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'login.html'));
-});
-
-app.get('/signup.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'signup.html'));
 });
 
 app.post('/signup', (req, res) => {
