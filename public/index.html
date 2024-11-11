@@ -63,7 +63,7 @@
           method: "DELETE",
         });
         if (response.ok) {
-          fetchTodos(); // Refresh the todos list after deletion
+          fetchTodos();
         } else {
           console.error("Failed to delete todo");
         }
