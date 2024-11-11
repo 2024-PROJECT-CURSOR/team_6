@@ -36,8 +36,11 @@ router.put("/edit/:id", authenticate, async (req, res) => {
 router.delete("/delete/:id", authenticate, async (req, res) => {
   try {
     const user = await User.findById(req.userId);
-    user.todos.id(req.params.id).remove();
+    const todoId = req.params.id;
+
+    user.todos = user.todos.filter((todo) => todo._id.toString() !== todoId);
     await user.save();
+
     res.json({ todos: user.todos });
   } catch (error) {
     res.status(500).json({ message: "Error deleting todo", error });
